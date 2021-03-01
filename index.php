@@ -25,21 +25,30 @@ try {
     $sql->execute();
 
 
-    $sql = $connect->prepare("INSERT INTO user ('nom', 'prenom', 'rue', 'numero', 'code_postal', 'ville', 'pays', 'mail')
-          VALUES (':nom', ':prenom', ':rue', ':numero', ':code_postal', ':ville', ':pays', ':mail')
+    $sql = $connect->prepare("
+            INSERT INTO user ('nom', 'prenom', 'rue', 'numero', 'code_postal', 'ville', 'pays', 'mail')
+            VALUES (:nom, :prenom, :rue, :numero, :code_postal, :ville, :pays, :mail)
           ");
 
         //echo "great, add new user";
+    $nom = 'Bubulle';
+    $prenom = 'Jean';
+    $rue = 'Rue du Moulin';
+    $numero = '45';
+    $code_postal = '59610';
+    $ville = 'Bastia';
+    $pays = 'France';
+    $mail = 'bubulleJean@gmail.com';
 
     $sql->execute([
-        ':nom' => ['Bubulle'],
-        ':prenom' => ['Jean'],
-        ':rue' => ['Rue du Moulin'],
-        ':numero' => [45],
-        ':code_postal' => [59610],
-        ':ville' => ['Bastia'],
-        ':pays' => ['France'],
-        ':mail'=> ['bubulleJean@gmail.com],
+        ':nom' => $nom,
+        ':prenom' => $prenom,
+        ':rue' => $rue,
+        ':numero' => $numero,
+        ':code_postal' => $code_postal,
+        ':ville' => $ville,
+        ':pays' => $pays,
+        ':mail'=> $mail,
     ]);
 
 
