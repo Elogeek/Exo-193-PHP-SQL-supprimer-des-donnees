@@ -39,7 +39,7 @@ class DB
      */
     public static function getInstance(): ?PDO {
         if( is_null(self::$dbInstance) ) {
-            new self();
+            new self("");
         }
         return self::$dbInstance;
     }

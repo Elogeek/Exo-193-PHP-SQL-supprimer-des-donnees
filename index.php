@@ -15,7 +15,7 @@ require './Classes/DB.php';
 try {
     $database = new DB('localhost','table_test_deux','root', 'dev');
 
-    $sql = 'DELETE FROM user WHERE id = 4';
+    $sql ="DELETE FROM user WHERE id = 4";
     if ($database>exec($sql) !== false) {
         echo "Sara n'est plus là!";
     }
@@ -29,7 +29,7 @@ try {
     $database->exec($sql);
 
     $sql="INSERT INTO user ('nom', 'prenom', 'rue', 'numero', 'code_postal', 'ville', 'pays', 'mail') 
-          VALUES ('Bu bulle', 'Jean', 'Rue du Moulin', 45, 59610, 'edrty', 'France', 'bubulleJean@gmail.com')
+          VALUES ('Bu bulle', 'Jean', 'Rue du Moulin', 45, 59610, 'Bastia', 'France', 'bubulleJean@gmail.com')
           ";
     $database->exec($sql);
 
