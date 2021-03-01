@@ -13,32 +13,43 @@
 require './Classes/DB.php';
 
 try {
-    $database = new DB('localhost','table_test_deux','root', 'dev');
+    $connect = DB::getInstance();
 
-    $sql ="DELETE FROM user WHERE id = 4";
-    if ($database>exec($sql) !== false) {
-        echo "Sara n'est plus là!";
-    }
+    $sql = $connect->prepare("DELETE FROM user WHERE id = 4");
+    $sql->execute();
+       // echo "Sara n'est plus là!";
 
-    $database->exec($sql);
 
-    $sql ="TRUNCATE TABLE user";
-    if ($database->exec($sql) !== false) {
-        echo " Le contenu supprimé et remis à zéro!";
-    }
-    $database->exec($sql);
+    $sql = $connect->prepare("TRUNCATE TABLE user");
+        //echo " Le contenu supprimé et remis à zéro!";
+    $sql->execute();
 
-    $sql="INSERT INTO user ('nom', 'prenom', 'rue', 'numero', 'code_postal', 'ville', 'pays', 'mail') 
-          VALUES ('Bu bulle', 'Jean', 'Rue du Moulin', 45, 59610, 'Bastia', 'France', 'bubulleJean@gmail.com')
-          ";
-    $database->exec($sql);
 
-    $sql="DROP TABLE user";
-    $database>exec($sql);
+    $sql = $connect->prepare("INSERT INTO user ('nom', 'prenom', 'rue', 'numero', 'code_postal', 'ville', 'pays', 'mail')
+          VALUES (':nom', ':prenom', ':rue', ':numero', ':code_postal', ':ville', ':pays', ':mail')
+          ");
 
-    $sql ="DROP DARABASE table_test_deux";
-    $database->exec($sql);
-          
+        //echo "great, add new user";
+
+    $sql->execute([
+        ':nom' => ['Bubulle'],
+        ':prenom' => ['Jean'],
+        ':rue' => ['Rue du Moulin'],
+        ':numero' => [45],
+        ':code_postal' => [59610],
+        ':ville' => ['Bastia'],
+        ':pays' => ['France'],
+        ':mail'=> ['bubulleJean@gmail.com],
+    ]);
+
+
+    $sql = $connect->prepare("DROP TABLE user");
+    $sql->execute();
+
+
+    $sql = $connect->prepare("DROP DATABASE table_test_deux");
+    $sql->execute();
+   
 }
 catch(PDOException $exeption) {
     echo $exeption->getMessage();
