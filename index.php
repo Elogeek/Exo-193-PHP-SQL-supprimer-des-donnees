@@ -10,3 +10,36 @@
  *    --> Finalement, vous décidez de supprimer complètement la table
  *    --> Et pour finir, comme vous n'avez plus de table dans la base de données, vous décidez de supprimer aussi la base de données.
  */
+require './Classes/DB.php';
+
+try {
+    $database = new DB('localhost','table_test_deux','root', 'dev');
+
+    $sql = 'DELETE FROM user WHERE id = 4';
+    if ($database>exec($sql) !== false) {
+        echo "Sara n'est plus là!";
+    }
+
+    $database->exec($sql);
+
+    $sql ="TRUNCATE TABLE user";
+    if ($database->exec($sql) !== false) {
+        echo " Le contenu supprimé et remis à zéro!";
+    }
+    $database->exec($sql);
+
+    $sql="INSERT INTO user ('nom', 'prenom', 'rue', 'numero', 'code_postal', 'ville', 'pays', 'mail') 
+          VALUES ('Bu bulle', 'Jean', 'Rue du Moulin', 45, 59610, 'edrty', 'France', 'bubulleJean@gmail.com')
+          ";
+    $database->exec($sql);
+
+    $sql="DROP TABLE user";
+    $database>exec($sql);
+
+    $sql ="DROP DARABASE table_test_deux";
+    $database->exec($sql);
+          
+}
+catch(PDOException $exeption) {
+    echo $exeption->getMessage();
+}
